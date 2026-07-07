@@ -6,8 +6,8 @@
 A lifecycle-aware router for reporting standards in healthcare AI. Answer three
 questions about your study and read off the standards that govern it, positioned
 across an eight-stage research lifecycle. COMPASS-AI operationalises the routing
-algorithm described in the accompanying manuscript, "COMPASS-AI: a lifecycle-aware
-algorithm for selecting reporting standards in healthcare AI research."
+algorithm described in the accompanying manuscript, "COMPASS-AI: A Lifecycle-aware
+Algorithm for Selecting Reporting Standards in Healthcare AI Research."
 
 The three questions are whether the work is a trial protocol, what the primary
 study type is, and whether generative AI was used in the research process. The
