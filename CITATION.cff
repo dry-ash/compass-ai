@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this tool, please cite both the software archive and the paper."
-title: "COMPASS-AI: a lifecycle-aware router for reporting standards in healthcare AI"
+title: "COMPASS-AI: A Lifecycle-aware Algorithm for Selecting Reporting Standards in Healthcare AI Research"
 authors:
   - family-names: Jain
     given-names: Yash
