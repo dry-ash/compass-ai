@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this tool, please cite both the software archive and the paper."
+title: "COMPASS-AI: a lifecycle-aware router for reporting standards in healthcare AI"
+authors:
+  - family-names: Jain
+    given-names: Yash
+  - family-names: Wu
+    given-names: Dishan
+  - family-names: Wang
+    given-names: Zhiyi
+  - family-names: Wang
+    given-names: Zhong
+doi: 10.5281/zenodo.21215393
+version: "1.0.0"
+license: MIT
+repository-code: "https://github.com/dry-ash/compass-ai"
+preferred-citation:
+  type: article
+  title: "COMPASS-AI: a lifecycle-aware algorithm for selecting reporting standards in healthcare AI research"
+  authors:
+    - family-names: Jain
+      given-names: Yash
+    - family-names: Wu
+      given-names: Dishan
+    - family-names: Wang
+      given-names: Zhiyi
+    - family-names: Wang
+      given-names: Zhong
+  # Fill in journal, year, and DOI once the paper is accepted.
