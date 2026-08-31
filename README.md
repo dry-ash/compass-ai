@@ -53,11 +53,9 @@ python tests/test_demonstration.py
 The tests pin the tool to the manuscript: if the routing ever drifts from the
 twelve demonstration studies, they fail.
 
-## Deploy it (Streamlit Community Cloud, free)
+## Deployed App (Streamlit)
 
-1. Go to https://share.streamlit.io, sign in with GitHub, and choose "New app".
-2. Point it at this repository, branch `main`, file `app.py`.
-3. Deploy. You will get a public URL of the form `https://<name>.streamlit.app`.
+You can access our deployed app to use COMPASS-AI: https://app-compass-ai.streamlit.app/
 
 ## Archived release and DOI
 
