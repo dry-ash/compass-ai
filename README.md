@@ -3,33 +3,33 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21215393.svg)](https://doi.org/10.5281/zenodo.21215393)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A lifecycle-aware router for reporting standards in healthcare AI. Answer three
-questions about your study and read off the standards that govern it, positioned
-across an eight-stage research lifecycle. COMPASS-AI operationalises the routing
-algorithm described in the accompanying manuscript, "COMPASS-AI: A Lifecycle-aware
-Algorithm for Selecting Reporting Standards in Healthcare AI Research."
+A lifecycle-aware router for reporting standards in healthcare AI (version 1.1). Answer three
+questions about your study, optionally state the lifecycle stage of the work, and read off the
+standards that govern it. COMPASS-AI operationalises the routing algorithm described in the
+manuscript "COMPASS-AI: A Lifecycle-aware Algorithm for Selecting Reporting Standards in Healthcare
+AI Research."
 
-The three questions are whether the work is a trial protocol, what the primary
-study type is, and whether generative AI was used in the research process. The
-tool returns a deduplicated set of the primary reporting guideline, its appraisal
-companion where one exists, any generative-AI standard, and the cross-cutting
-standards that apply to every study, each with its citation and DOI.
+1. Is the work a protocol for an interventional AI trial not yet conducted?
+2. What is the primary study type (and, optionally, a second design family)?
+3. Did the research process itself use generative AI tools?
 
-COMPASS-AI selects standards. It does not judge whether a study meets them.
+The tool returns **core** standards (the primary reporting guideline, its appraisal companion,
+any conditional addition, one minimum-information standard, FUTURE-AI and STANDING Together, and
+GAMER when generative AI was used in the research process) and **related** instruments to consult.
+All 28 instruments in the corpus are reachable. COMPASS-AI selects standards; it does not judge
+whether a study meets them.
 
-## What is in this repository
+## Repository
 
 | File | Purpose |
 |---|---|
-| `app.py` | Streamlit web interface (the three-question form) |
-| `router.py` | The routing algorithm as a pure, testable function |
-| `standards.py` | Verified standards registry and routing table (single source of truth) |
-| `tests/test_demonstration.py` | Asserts the router reproduces the twelve published demonstration studies (Table 3) |
-| `requirements.txt`, `LICENSE`, `CITATION.cff` | Environment, licence, and citation metadata |
-
-Every standard in `standards.py` carries the exact citation and DOI used in the
-manuscript. The routing table is the published algorithm expressed as data, not
-a new mapping.
+| `app.py` | Streamlit web interface |
+| `router.py` | The routing algorithm as a pure, testable function (formal statement in the docstring) |
+| `standards.py` | Registry of the 28 instruments (category, lifecycle stages, scope, citation, DOI) and the routing table |
+| `analysis.py` | Reproduces the coverage, burden and co-occurrence analyses |
+| `tests/test_routing.py` | Pins the router to the manuscript |
+| `evaluation/` | De-identified external-evaluation responses and the script that reproduces the reported results (uses the archived v1.0 router the participants used) |
+| `CHANGELOG.md` | Changes between versions |
 
 ## Run it locally
 
@@ -39,43 +39,25 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-The app opens in your browser at `http://localhost:8501`.
-
-## Run the tests
+## Tests and analyses
 
 ```bash
 pip install pytest
-python -m pytest -q
-# or, without pytest:
-python tests/test_demonstration.py
+python -m pytest -q          # or: python tests/test_routing.py
+python analysis.py
+python evaluation/analyse_external_evaluation.py
 ```
 
-The tests pin the tool to the manuscript: if the routing ever drifts from the
-twelve demonstration studies, they fail.
+## Deployed app
 
-## Deployed App (Streamlit)
+https://app-compass-ai.streamlit.app/
 
-You can access our deployed app to use COMPASS-AI: https://app-compass-ai.streamlit.app/
+## Archive and citation
 
-## Archived release and DOI
-
-This repository is archived on Zenodo with a citable DOI:
-**https://doi.org/10.5281/zenodo.21215393**
-
-To publish a new archived version, edit the code, then create a new GitHub
-release (Releases, then Draft a new release, tag such as `v1.1.0`, publish).
-Zenodo archives the release automatically and mints a version DOI, while the DOI
-above always resolves to the latest version.
-
-## Citation
-
-If you use COMPASS-AI, please cite both the software archive and the paper. See
-`CITATION.cff`; GitHub shows a "Cite this repository" button.
-
-- Software: Jain Y, Wu D, Wang Z, Wang Z. COMPASS-AI: a lifecycle-aware router for
-  reporting standards in healthcare AI. Zenodo. https://doi.org/10.5281/zenodo.21215393
-- Paper: citation to be added on acceptance.
+Archived on Zenodo: https://doi.org/10.5281/zenodo.21215393 (concept DOI, resolves to the latest
+version). Create a GitHub release (tag `v1.1.0`) with the Zenodo integration enabled so the whole
+repository is archived. See `CITATION.cff`.
 
 ## Licence
 
-MIT (see `LICENSE`). You are free to reuse and adapt the code with attribution.
+MIT (see `LICENSE`).
