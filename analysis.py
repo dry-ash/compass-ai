@@ -1,5 +1,5 @@
 """
-analysis.py  (COMPASS-AI v1.1)
+analysis.py  (COMPASS-AI v2.0)
 
 Reproduces the corpus analyses reported in the manuscript from the registry:
   coverage()      instruments per lifecycle stage, by function category (Table S2)

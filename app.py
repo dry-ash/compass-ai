@@ -1,5 +1,5 @@
 """
-app.py  (COMPASS-AI v1.1)
+app.py  (COMPASS-AI v2.0)
 
 Web front end for the lifecycle-aware reporting-standard router. Answer three
 questions (and, optionally, the lifecycle stage of the work) and receive the
@@ -92,8 +92,8 @@ result = route(is_trial_protocol=is_protocol, primary_type=primary_type, seconda
                genai_in_research=genai, stage=stage)
 
 if result["open_node"]:
-    st.error("Open node. No dedicated standard exists for multimodal foundation models. The nearest-fit set "
-             "below is computed by a fixed rule; report the uncovered domains listed at the end explicitly.")
+    st.error("Open node. No dedicated standard for multimodal foundation models was identified in the corpus. The nearest-fit set "
+             "below is computed by a fixed rule; report the domains listed at the end explicitly.")
 
 st.metric("Core standards to consult", result["n_core"])
 st.caption("Where two standards ask for the same item, report it once and cross-reference it.")
@@ -107,7 +107,7 @@ for key in ROLE_ORDER:
         st.markdown(standard_line(sid, result["related_notes"].get(sid)))
 
 if result["uncovered_domains"]:
-    st.markdown("### Minimum uncovered domains to report explicitly")
+    st.markdown("### Domains the nearest-fit standards do not address specifically (report explicitly)")
     for d in result["uncovered_domains"]:
         st.markdown(f"- {d}")
 
@@ -132,8 +132,8 @@ st.download_button("Download this result (Markdown)", data=as_markdown(result),
 
 with st.expander("About this tool and how to cite it"):
     st.markdown(
-        "COMPASS-AI operationalises the routing algorithm described in the accompanying manuscript. It maps 28 "
+        "COMPASS-AI operationalises the routing algorithm described in the accompanying manuscript. It maps 31 "
         "AI-specific reporting guidelines, appraisal tools, minimum-information standards and governance "
         "frameworks across an eight-stage research lifecycle and returns the set that governs a given study.\n\n"
         "Source code: https://github.com/dry-ash/compass-ai\n\n"
-        "Archived release (DOI): https://doi.org/10.5281/zenodo.21215393")
+        "Archived release (DOI): https://doi.org/10.5281/zenodo.23116822")

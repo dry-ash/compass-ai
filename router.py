@@ -1,11 +1,11 @@
 """
-router.py  (COMPASS-AI v1.1)
+router.py  (COMPASS-AI v2.0)
 
 The routing algorithm as a pure function. No user interface, no global state.
 
 Formal statement
 ----------------
-Let R be the set of ten study-type routes, I the 28 instruments, and for each
+Let R be the set of ten study-type routes, I the 31 instruments, and for each
 instrument i: stages(i), scope(i), category(i), object(i). Inputs are
 
     p   Gate 1, protocol of an interventional AI trial not yet conducted (bool)
@@ -21,8 +21,8 @@ The routed set is
     Related(T,s) = Related(T) U { i : "general" in scope(i), s in stages(i),
                                        object(i) = AI under study }  minus Core
 
-Lifecycle enters in two ways. (1) Each route r has a window W(r) of stages (its
-primary guideline's span), so the study type the user selects already fixes
+Lifecycle enters in two ways. (1) Each route r has a window W(r): the stages at
+which a study of that type generates its evidence, so the study type the user selects already fixes
 where in the lifecycle the work sits: moving a project from development (S3-S5)
 to a trial (S6) or deployment (S7-S8) changes the route and therefore Core.
 (2) When s is given, general-scope instruments covering s are added to
@@ -31,8 +31,10 @@ Related, and the router reports whether s lies in W(r) for the chosen types.
 The foundation-model route names no instruments. Its nearest-fit set is
 computed by nearest_fit(): the reporting, minimum-information and appraisal
 instruments that are about the AI under study, whose declared scope includes
-large language / generative or foundation models, and whose stage span
-overlaps the route window.
+large language / generative or foundation models, whose stage span
+overlaps the route window, and that are not limited to a single task.
+With a fixed study type, the stage input s changes Related and the window
+check but not Core. In protocol mode T is empty.
 
 Deduplication: an instrument is listed once, under its highest-precedence
 role: primary > framework > appraisal > conditional > min_info >
@@ -59,7 +61,9 @@ def nearest_fit(route_key="foundation_model"):
     Returns {"primary": [...], "appraisal": [...]} computed from the registry:
     instruments with object == ai_under_study, category in {reporting, min_info,
     appraisal}, scope intersecting {llm_generative, foundation_model}, and stage
-    span overlapping the route window. Minimum-information instruments are
+    span overlapping the route window, excluding instruments limited to a single
+    task (a single-task checklist cannot be the nearest fit for a multi-task
+    model). Minimum-information instruments are
     handled by the cross-cutting slot, so they are not repeated here.
     """
     window = ROUTES[route_key]["window"]
@@ -69,6 +73,7 @@ def nearest_fit(route_key="foundation_model"):
         and m["category"] in {"reporting", "min_info", "appraisal"}
         and m["scope"] & {"llm_generative", "foundation_model"}
         and m["stages"] & window
+        and not m.get("task_specific", False)
     )
     return {
         "primary": [k for k in hit if STANDARDS[k]["category"] == "reporting"],
@@ -188,8 +193,8 @@ ROLE_HEADINGS = {
 def as_markdown(result, title="Reporting-standard routing result"):
     lines = [f"# {title}", "", f"COMPASS-AI v{result['version']}", ""]
     if result["open_node"]:
-        lines += ["> OPEN NODE: no dedicated standard exists. The nearest-fit set below is computed by a fixed "
-                  "rule; report the uncovered domains explicitly.", ""]
+        lines += ["> OPEN NODE: no dedicated standard was identified in the corpus. The nearest-fit set below is computed by a fixed "
+                  "rule; report the domains listed below explicitly.", ""]
     lines += [f"**Core standards to consult: {result['n_core']}**", ""]
     for k in ROLE_ORDER:
         if not result[k]:
@@ -202,7 +207,7 @@ def as_markdown(result, title="Reporting-standard routing result"):
             lines.append(f"- **{s}**{extra}: {m['full_name']}. Stages {stages}. {m['citation']} {m['url']}")
         lines.append("")
     if result["uncovered_domains"]:
-        lines.append("## Minimum uncovered domains to report explicitly")
+        lines.append("## Domains the nearest-fit standards do not address specifically (report explicitly)")
         lines += [f"- {d}" for d in result["uncovered_domains"]] + [""]
     if result["stage_check"]:
         sc = result["stage_check"]
