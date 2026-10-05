@@ -136,4 +136,4 @@ with st.expander("About this tool and how to cite it"):
         "AI-specific reporting guidelines, appraisal tools, minimum-information standards and governance "
         "frameworks across an eight-stage research lifecycle and returns the set that governs a given study.\n\n"
         "Source code: https://github.com/dry-ash/compass-ai\n\n"
-        "Archived release (DOI): https://doi.org/10.5281/zenodo.23116822")
+        "Archived release (DOI): https://doi.org/10.5281/zenodo.23136990")
